@@ -8,7 +8,7 @@ async function start() {
   try {
     const PORT = process.env.PORT || 3030;
     const app = await NestFactory.create(AppModule, {
-      logger: ["error", "warn"],
+      logger: ["error", "warn", "log"],
     });
     app.setGlobalPrefix("api");
     app.useGlobalPipes(new ValidationPipe());
