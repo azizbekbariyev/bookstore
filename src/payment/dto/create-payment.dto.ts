@@ -8,7 +8,7 @@ export class CreatePaymentDto {
     })
     @IsDecimal()
     @IsNotEmpty()
-    amount: number;
+    amount: string;
 
     @ApiProperty({
         example: "Credit Card",

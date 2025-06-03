@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Delivery } from "../../delivery/entities/delivery.entity";
 
-@Entity()
+@Entity('suppliers')
 export class Suppliers {
     @ApiProperty({
         example: 1,

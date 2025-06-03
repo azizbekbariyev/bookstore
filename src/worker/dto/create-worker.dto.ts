@@ -62,6 +62,5 @@ export class CreateWorkerDto {
         example:"refresh_token",
         description:"Refresh token of the worker"
     })
-    @IsString()
     hashed_refresh_token?: string
 }

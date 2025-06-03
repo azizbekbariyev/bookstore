@@ -1,6 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from "typeorm";
 import { BookStore } from "../../book_store/entities/book_store.entity";
+import * as uuid from "uuid";
 
 @Entity()
 export class Worker {
@@ -68,28 +76,28 @@ export class Worker {
     example: true,
     description: "Whether the worker is active",
   })
-  @Column({ default: true })
+  @Column({ default: false })
   is_active: boolean;
 
   @ApiProperty({
     example: "hashedrefreshtoken123",
     description: "Hashed refresh token of the worker",
   })
-  @Column()
-  hashed_refresh_token: string;
+  @Column({ nullable: true })
+  hashed_refresh_token?: string;
 
   @ApiProperty({
     example: 1,
     description: "ID of the book store associated with the worker",
   })
   @Column({ nullable: true })
-  book_store_id?: number;
+  book_store_id: number;
 
   @ApiProperty({
     example: "https://example.com/activate/123",
     description: "Activation link of the worker",
   })
-  @Column({ nullable: true })
+  @Column({ default: uuid.v4() })
   activation_link: string;
 
   @ManyToOne(() => BookStore, (bookStore) => bookStore.workers)

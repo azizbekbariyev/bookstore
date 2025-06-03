@@ -36,7 +36,7 @@ export class CreateBookStoreDto {
         description: "ID of the address associated with the book store",
     })
     @IsInt()
-    address_id: number;
+    addressId: number;
 
     @ApiPropertyOptional({
         example: 1,

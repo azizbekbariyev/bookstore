@@ -70,7 +70,7 @@ export class Order {
     description: "Total amount of the order",
   })
   @Column({ type: "decimal" })
-  total_amount: number;
+  total_amount: string;
 
   @OneToMany(() => Payment, (payment) => payment.order)
   payments: Payment[];

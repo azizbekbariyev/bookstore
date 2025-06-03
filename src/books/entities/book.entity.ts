@@ -87,11 +87,11 @@ export class Book {
   @ManyToOne(() => Genre, (genre) => genre.books)
   genre: Genre;
 
+  @ManyToOne(() => BookStore, (bookStore) => bookStore.books)
+  bookStore: BookStore;
+
   @OneToMany(() => BookAuthor, (bookAuthor) => bookAuthor.book)
   bookAuthors: BookAuthor[];
-
-  @OneToMany(() => BookStore, (bookStore) => bookStore.book)
-  bookStores: BookStore[];
 
   @OneToMany(() => Review, (review) => review.book)
   reviews: Review[];

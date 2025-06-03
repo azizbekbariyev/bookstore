@@ -56,6 +56,5 @@ export class CreateCustomerDto {
         example: "$2b$10$...hashed_refresh_token...",
         description: "Hashed refresh token of the customer",
     })
-    @IsString()
     hashed_refresh_token?: string
 }

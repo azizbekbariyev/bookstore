@@ -49,37 +49,14 @@ export class BookStore {
   @Column()
   name: string;
 
-  @ApiPropertyOptional({
-    example: 1,
-    description: "ID of the address associated with the book store",
-  })
-  @Column({ nullable: true })
-  address_id?: number;
-
   @ManyToOne(() => Address, (address) => address.bookStores)
-  @JoinColumn({ name: "address_id" })
   address: Address;
 
-  @ApiPropertyOptional({
-    example: 1,
-    description: "ID of the worker associated with the book store",
-  })
-  @Column({ nullable: true })
-  worker_id?: number;
+  @OneToMany(() => Book, (books) => books.bookStore)
+  books: Book[];
 
   @OneToMany(() => Worker, (worker) => worker.bookStore)
   workers: Worker[];
-
-  @ApiPropertyOptional({
-    example: 1,
-    description: "ID of the book associated with the book store",
-  })
-  @Column({ nullable: true })
-  book_id?: number;
-
-  @ManyToOne(() => Book, (book) => book.bookStores)
-  @JoinColumn({ name: "book_id" })
-  book: Book;
 
   @OneToMany(() => Order, (order) => order.bookStore)
   orders: Order[];

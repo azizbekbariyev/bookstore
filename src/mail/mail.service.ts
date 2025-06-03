@@ -14,7 +14,7 @@ export class EmailService {
     await this.mailerService.sendMail({
       to: customer.email,
       subject: "Welcome to BookStore !",
-      template: "./confirmation",
+      template: "confirmation",
       context: {
         name: customer.first_name,
         url,
@@ -29,7 +29,7 @@ export class EmailService {
     await this.mailerService.sendMail({
       to: worker.email,
       subject: "Welcome to BookStore !",
-      template: "./confirmation",
+      template: "confirmation",
       context: {
         name: worker.first_name,
         url,

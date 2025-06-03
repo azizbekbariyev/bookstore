@@ -18,10 +18,10 @@ import { MailerModule } from '@nestjs-modules/mailer';
           },
         },
         defaults:{
-          from:`"Skidkachi" <${config.get<string>("SMTP_HOST")}>`,
+          from:`"Book Store" <${config.get<string>("SMTP_HOST")}>`,
         },
         template:{
-          dir:join(__dirname,"templates"),
+          dir:join(process.cwd(), 'src/mail/templates'),
           adapter:new HandlebarsAdapter(),
           template:"confirmation",
           options:{

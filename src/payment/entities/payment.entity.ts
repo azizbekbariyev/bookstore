@@ -16,7 +16,7 @@ export class Payment {
         description: "Amount of the payment",
     })
     @Column({ type: "decimal" })
-    amount: number;
+    amount: string;
 
     @ApiProperty({
         example: "Credit Card",

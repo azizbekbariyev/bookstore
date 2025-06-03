@@ -4,6 +4,7 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from './entities/customer.entity';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class CustomerService {
@@ -13,6 +14,7 @@ export class CustomerService {
   ) {}
 
   create(createCustomerDto: CreateCustomerDto) {
+    createCustomerDto.hashed_password = bcrypt.hashSync(createCustomerDto.hashed_password, 10);
     return this.customerRepository.save(createCustomerDto);
   }
 

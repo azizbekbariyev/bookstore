@@ -38,11 +38,11 @@ export class AuthService {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
         secret: process.env.WORKER_ACCESS_TOKEN_KEY,
-        expiresIn: process.env.STAFF_ACCESS_TOKEN_TIME,
+        expiresIn: process.env.WORKER_ACCESS_TOKEN_TIME,
       }),
       this.jwtService.signAsync(payload, {
         secret: process.env.WORKER_REFRESH_TOKEN_KEY,
-        expiresIn: process.env.STAFF_REFRESH_TOKEN_TIME,
+        expiresIn: process.env.WORKER_REFRESH_TOKEN_TIME,
       }),
     ]);
 
@@ -124,6 +124,7 @@ export class AuthService {
     const newWorker = await this.workerService.create(createWorkerDto);
     try {
       await this.mailService.sendMailWorker(newWorker);
+      return newWorker;
     } catch (error) {
       console.log(error);
       throw new ServiceUnavailableException(
@@ -278,12 +279,13 @@ export class AuthService {
     const customer = await this.customerService.findByEmail(
       createCustomerDto.email
     );
-    if (Customer) {
+    if (customer) {
       throw new ConflictException("Customer already exists");
     }
     const newCustomer = await this.customerService.create(createCustomerDto);
     try {
       await this.mailService.sendMailCustomer(newCustomer);
+      return newCustomer;
     } catch (error) {
       console.log(error);
       throw new ServiceUnavailableException(
@@ -320,7 +322,7 @@ export class AuthService {
     };
   }
 
-  async signOutCustomer(req:Request, res:Response) {
+  async signOutCustomer(req: Request, res: Response) {
     const refresh_token = req.cookies.refresh_token;
     if (!refresh_token) {
       throw new BadRequestException("Refresh token topilmadi");

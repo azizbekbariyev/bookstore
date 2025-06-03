@@ -56,5 +56,5 @@ export class CreateOrderDto {
     })
     @IsDecimal()
     @IsNotEmpty()
-    total_amount: number;
+    total_amount: string;
 }

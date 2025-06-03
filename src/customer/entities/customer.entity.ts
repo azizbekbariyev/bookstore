@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { Address } from "../../address/entities/address.entity";
 import { Review } from "../../reviews/entities/review.entity";
+import * as uuid from "uuid";
 
 @Entity()
 export class Customer {
@@ -81,26 +82,19 @@ export class Customer {
   @Column()
   hashed_password: string;
 
-  @ApiPropertyOptional({
-    example: "random_refresh_token_string",
-    description: "Refresh token for customer authentication",
-  })
-  @Column({ nullable: true })
-  refresh_token?: string;
-
   @ApiProperty({
     example: "https://example.com/activate?token=123456789",
     description: "Activation link for customer account activation",
   })
-  @Column()
+  @Column({ default: uuid.v4() })
   activation_link: string;
 
   @ApiProperty({
     example: "$2b$10$...hashed_refresh_token...",
     description: "Hashed refresh token of the customer",
   })
-  @Column()
-  hashed_refresh_token: string;
+  @Column({ nullable: true })
+  hashed_refresh_token?: string;
 
   @ManyToOne(() => Address, (address) => address.customers)
   address: Address;

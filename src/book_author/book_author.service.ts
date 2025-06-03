@@ -25,22 +25,22 @@ export class BookAuthorService {
     const author = await this.authorRepository.findOne({
       where: { id: createBookAuthorDto.authorId },
     });
+
     if (book && author) {
-      return this.bookAuthorRepository.save({
-        book: book,
-        author: author,
-        ...createBookAuthorDto,
+      const bookAuthor = this.bookAuthorRepository.create({
+        book,
+        author,
       });
+      return this.bookAuthorRepository.save(bookAuthor);
     }
+
     throw new Error("Book or Author not found");
   }
 
   findAll() {
-    return this.bookAuthorRepository.find(
-      {
-        relations: ['book', 'author'],
-      }
-    );
+    return this.bookAuthorRepository.find({
+      relations: ["book", "author"],
+    });
   }
 
   findOne(id: number) {
@@ -49,18 +49,15 @@ export class BookAuthorService {
     });
   }
 
-  update(id: number, updateBookAuthorDto: UpdateBookAuthorDto) {
-    const book = this.bookRepository.findOne({
+  async update(id: number, updateBookAuthorDto: UpdateBookAuthorDto) {
+    const book = await this.bookRepository.findOne({
       where: { id: updateBookAuthorDto.bookId },
     });
-    const author = this.authorRepository.findOne({
+    const author = await this.authorRepository.findOne({
       where: { id: updateBookAuthorDto.authorId },
     });
-    if (!book && !author) {
-      return this.bookAuthorRepository.update(
-        { id },
-        { book: book, author: author, ...updateBookAuthorDto }
-      );
+    if (book && author) {
+      return this.bookAuthorRepository.preload({ id, book, author });
     }
     throw new Error("Book or Author not found");
   }

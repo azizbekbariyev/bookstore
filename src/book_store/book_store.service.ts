@@ -13,11 +13,15 @@ export class BookStoreService {
   ) {}
 
   create(createBookStoreDto: CreateBookStoreDto) {
-    return this.bookStoreRepository.create(createBookStoreDto);
+    return this.bookStoreRepository.save(createBookStoreDto);
   }
 
   findAll() {
-    return this.bookStoreRepository.find();
+    return this.bookStoreRepository.find(
+      {
+        relations: ['address'],
+      },
+    );
   }
 
   findOne(id: number) {
