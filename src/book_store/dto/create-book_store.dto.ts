@@ -38,14 +38,6 @@ export class CreateBookStoreDto {
     @IsInt()
     addressId: number;
 
-    @ApiPropertyOptional({
-        example: 1,
-        description: "ID of the book associated with the book store",
-    })
-    @IsOptional()
-    @IsInt()
-    book_id?: number;
-
     @ApiProperty({
         example: "Central Book Store",
         description: "Name of the book store",

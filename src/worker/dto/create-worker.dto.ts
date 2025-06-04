@@ -38,7 +38,7 @@ export class CreateWorkerDto {
         example: "employee",
         description: "Role of the worker",
     })
-    @IsEnum(["admin", "employee", "manager"])
+    @IsEnum(["admin", "employee", "manager", "superadmin"])
     @IsNotEmpty()
     role: string;
 

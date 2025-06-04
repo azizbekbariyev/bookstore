@@ -48,13 +48,6 @@ export class Customer {
   phone?: string;
 
   @ApiPropertyOptional({
-    example: 1,
-    description: "ID of the address associated with the customer",
-  })
-  @Column({ nullable: true })
-  address_id?: number;
-
-  @ApiPropertyOptional({
     example: "2025-05-29 12:00:00",
     description: "Registration date and time of the customer",
   })

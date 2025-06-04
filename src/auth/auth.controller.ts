@@ -1,17 +1,22 @@
-import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { CreateCustomerDto } from '../customer/dto/create-customer.dto';
-import { CreateWorkerDto } from '../worker/dto/create-worker.dto';
-import { Request, Response } from 'express';
-import { SignInDto } from './dto/sign-in.dto';
-import { ApiOperation } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { AuthService } from "./auth.service";
+import { CreateCustomerDto } from "../customer/dto/create-customer.dto";
+import { CreateWorkerDto } from "../worker/dto/create-worker.dto";
+import { Request, Response } from "express";
+import { SignInDto } from "./dto/sign-in.dto";
+import { ApiOperation } from "@nestjs/swagger";
+import { Roles } from "../common/decorators/roles-auth.decorator";
+import { RolesGuard } from "../common/guards/jwt-role.guard";
+import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Get("customer/activate/:link")
-  @ApiOperation({ summary: "Customer hisobini faollashtirish (activation link orqali)" })
+  @ApiOperation({
+    summary: "Customer hisobini faollashtirish (activation link orqali)",
+  })
   async activateStaff(@Param("link") link: string) {
     return this.authService.activateCustomer(link);
   }
@@ -23,17 +28,15 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response
   ) {
     return this.authService.refreshTokenCustomer(req, res);
-  }  
+  }
 
-  @Post('sign-up-customer')
+  @Post("sign-up-customer")
   @ApiOperation({ summary: "Yangi customer ro‘yxatdan o‘tishi (sign up)" })
-  async signUpdCustomer(
-    @Body() createCustomerDto: CreateCustomerDto,
-  ) {
+  async signUpdCustomer(@Body() createCustomerDto: CreateCustomerDto) {
     return this.authService.signUpCustomer(createCustomerDto);
   }
 
-  @Post('sign-in-customer')
+  @Post("sign-in-customer")
   @ApiOperation({ summary: "Customer tizimga kirishi (sign in)" })
   async signInCustomer(
     @Body() signInDto: SignInDto,
@@ -42,17 +45,19 @@ export class AuthController {
     return this.authService.signInCustomer(signInDto, res);
   }
 
-  @Post('sign-out-customer')
+  @Post("sign-out-customer")
   @ApiOperation({ summary: "Customer tizimdan chiqishi (sign out)" })
   async signOutCustomer(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response
-  ){
+  ) {
     return this.authService.signOutCustomer(req, res);
   }
 
   @Get("worker/activate/:link")
-  @ApiOperation({ summary: "Worker hisobini faollashtirish (activation link orqali)" })
+  @ApiOperation({
+    summary: "Worker hisobini faollashtirish (activation link orqali)",
+  })
   async activateWorker(@Param("link") link: string) {
     return this.authService.activateWorker(link);
   }
@@ -66,15 +71,16 @@ export class AuthController {
     return this.authService.refreshTokenWorker(req, res);
   }
 
-  @Post('sign-up-worker')
+  @Roles("superadmin")
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Post("sign-up-worker")
   @ApiOperation({ summary: "Yangi worker ro‘yxatdan o‘tishi (sign up)" })
-  async signUpWorker(
-    @Body() createWorkerDto: CreateWorkerDto,
-  ) {
+  async signUpWorker(@Body() createWorkerDto: CreateWorkerDto) {
     return this.authService.signUpWorker(createWorkerDto);
   }
 
-  @Post('sign-in-worker')
+  @Post("sign-in-worker")
   @ApiOperation({ summary: "Worker tizimga kirishi (sign in)" })
   async signInWorker(
     @Body() signInDto: SignInDto,
@@ -83,12 +89,12 @@ export class AuthController {
     return this.authService.signInWorker(signInDto, res);
   }
 
-  @Post('sign-out-worker')
+  @Post("sign-out-worker")
   @ApiOperation({ summary: "Worker tizimdan chiqishi (sign out)" })
   async signOutWorker(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response
-  ){
+  ) {
     return this.authService.signOutWorker(req, res);
   }
 }

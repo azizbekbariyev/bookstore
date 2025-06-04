@@ -32,7 +32,7 @@ export class AuthService {
       email: worker.email,
       hashed_password: worker.hashed_password,
       is_active: worker.is_active,
-      role: worker.role,
+      role: [worker.role],
     };
 
     const [accessToken, refreshToken] = await Promise.all([
@@ -192,6 +192,7 @@ export class AuthService {
       email: customer.email,
       hashed_password: customer.hashed_password,
       is_active: customer.is_active,
+      role:["customer"]
     };
 
     const [accessToken, refreshToken] = await Promise.all([

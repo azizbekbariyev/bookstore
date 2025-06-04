@@ -72,4 +72,10 @@ export class CreateBookDto {
   @IsOptional()
   @IsString()
   language?: string;
+
+  @ApiProperty({
+    example: 1,
+    description: "ID of the book store that sells this book",
+  })
+  bookStoreId: number
 }

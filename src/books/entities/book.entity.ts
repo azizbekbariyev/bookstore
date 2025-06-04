@@ -84,6 +84,9 @@ export class Book {
   @UpdateDateColumn({ type: "timestamp" })
   updated_at: Date;
 
+  @Column()
+  bookStoreId: number;  
+
   @ManyToOne(() => Genre, (genre) => genre.books)
   genre: Genre;
 

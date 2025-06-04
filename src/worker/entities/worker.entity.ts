@@ -53,7 +53,7 @@ export class Worker {
   })
   @Column({
     type: "enum",
-    enum: ["admin", "employee", "manager"],
+    enum: ["admin", "employee", "manager", "superadmin"],
     default: "employee",
   })
   role: string;

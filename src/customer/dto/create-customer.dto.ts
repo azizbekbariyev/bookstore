@@ -36,7 +36,7 @@ export class CreateCustomerDto {
         description: "ID of the address associated with the customer",
     })
     @IsOptional()
-    address_id?: number;
+    addressId?: number;
 
     @ApiProperty({
         example: true,
