@@ -2,12 +2,13 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { GenreService } from './genre.service';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../common/decorators/roles-auth.decorator';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { JwtActiveGuard } from '../common/guards/jwt-active.guard';
 import { RolesGuard } from '../common/guards/jwt-role.guard';
 
+@ApiBearerAuth()
 @ApiTags('Genre')
 @Controller('genre')
 export class GenreController {

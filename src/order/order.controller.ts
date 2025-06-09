@@ -11,13 +11,14 @@ import {
 import { OrderService } from "./order.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { UpdateOrderDto } from "./dto/update-order.dto";
-import { ApiOperation } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation } from "@nestjs/swagger";
 import { Roles } from "../common/decorators/roles-auth.decorator";
 import { RolesGuard } from "../common/guards/jwt-role.guard";
 import { JwtSelfGuard } from "../common/guards/jwt-self.guard";
 import { JwtActiveGuard } from "../common/guards/jwt-active.guard";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 
+@ApiBearerAuth()
 @Controller("order")
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}

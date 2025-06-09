@@ -11,12 +11,13 @@ import {
 import { BooksService } from "./books.service";
 import { CreateBookDto } from "./dto/create-book.dto";
 import { UpdateBookDto } from "./dto/update-book.dto";
-import { ApiOperation } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation } from "@nestjs/swagger";
 import { Roles } from "../common/decorators/roles-auth.decorator";
 import { RolesGuard } from "../common/guards/jwt-role.guard";
 import { JwtActiveGuard } from "../common/guards/jwt-active.guard";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 
+@ApiBearerAuth()
 @Controller("books")
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}

@@ -4,11 +4,12 @@ import { CreateCustomerDto } from "../customer/dto/create-customer.dto";
 import { CreateWorkerDto } from "../worker/dto/create-worker.dto";
 import { Request, Response } from "express";
 import { SignInDto } from "./dto/sign-in.dto";
-import { ApiOperation } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation } from "@nestjs/swagger";
 import { Roles } from "../common/decorators/roles-auth.decorator";
 import { RolesGuard } from "../common/guards/jwt-role.guard";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 
+@ApiBearerAuth()
 @Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -71,9 +72,9 @@ export class AuthController {
     return this.authService.refreshTokenWorker(req, res);
   }
 
-  @Roles("superadmin")
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtAuthGuard)
+  // @Roles("superadmin")
+  // @UseGuards(RolesGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post("sign-up-worker")
   @ApiOperation({ summary: "Yangi worker ro‘yxatdan o‘tishi (sign up)" })
   async signUpWorker(@Body() createWorkerDto: CreateWorkerDto) {

@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { Worker } from './entities/worker.entity';
 import * as bcrypt from 'bcrypt';
 import { BookStore } from '../book_store/entities/book_store.entity';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class WorkerService {
@@ -60,5 +61,10 @@ export class WorkerService {
 
   findByLink(activation_link: string) {
     return this.workerRepository.findOne({ where: { activation_link } });
+  }
+
+  updatePassword(id: number, updatePasswordDto: UpdatePasswordDto) {
+    const hashed_password = bcrypt.hashSync(updatePasswordDto.hashed_password, 10);
+    return this.workerRepository.update(id, { hashed_password });
   }
 }

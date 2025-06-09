@@ -22,6 +22,13 @@ async function start() {
       .setDescription("BookStore API description")
       .setVersion("1.0.0")
       .addTag("BookStore")
+      .addBearerAuth(
+        {
+          type: "http",
+          scheme: "Bearer",
+          bearerFormat: "JWT",
+        }
+      )
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup("api/docs", app, document);

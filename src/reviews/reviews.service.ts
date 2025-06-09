@@ -13,22 +13,23 @@ export class ReviewsService {
     @InjectRepository(Review)
     private readonly reviewRepository: Repository<Review>,
     @InjectRepository(Customer)
-    private readonly bookRepository: Repository<Customer>,
+    private readonly customerRepository: Repository<Customer>,
     @InjectRepository(Book)
-    private readonly customerRepository: Repository<Book>,
+    private readonly bookRepository: Repository<Book>,
   ) {}
 
   async create(createReviewDto: CreateReviewDto) {
     const book = await this.bookRepository.findOne({
       where: { id: createReviewDto.bookId },
-    })
+    }) 
     const customer = await this.customerRepository.findOne({
       where: { id: createReviewDto.customerId },
     })
     if(book && customer) {
       return this.reviewRepository.save(createReviewDto);
     }
-    throw new Error("BookStore not found");
+    console.log(book, customer);
+    throw new Error("Book, Customer not found");
   }
 
   findAll() {

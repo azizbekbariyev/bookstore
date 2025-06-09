@@ -2,12 +2,13 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { BookStoreService } from './book_store.service';
 import { CreateBookStoreDto } from './dto/create-book_store.dto';
 import { UpdateBookStoreDto } from './dto/update-book_store.dto';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { JwtActiveGuard } from '../common/guards/jwt-active.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';
 import { RolesGuard } from '../common/guards/jwt-role.guard';
 
+@ApiBearerAuth()
 @Controller('book-store')
 export class BookStoreController {
   constructor(private readonly bookStoreService: BookStoreService) {}

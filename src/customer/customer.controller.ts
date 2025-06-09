@@ -11,13 +11,15 @@ import {
 import { CustomerService } from "./customer.service";
 import { CreateCustomerDto } from "./dto/create-customer.dto";
 import { UpdateCustomerDto } from "./dto/update-customer.dto";
-import { ApiOperation } from "@nestjs/swagger";
+import { UpdatePasswordDto } from "./dto/update-password.dto";
+import { ApiBearerAuth, ApiOperation } from "@nestjs/swagger";
 import { Roles } from "../common/decorators/roles-auth.decorator";
 import { RolesGuard } from "../common/guards/jwt-role.guard";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 import { JwtActiveGuard } from "../common/guards/jwt-active.guard";
 import { JwtSelfGuard } from "../common/guards/jwt-self.guard";
 
+@ApiBearerAuth()
 @Controller("customer")
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
@@ -75,5 +77,15 @@ export class CustomerController {
   @ApiOperation({ summary: "ID bo‘yicha mijozni o‘chirish" })
   remove(@Param("id") id: string) {
     return this.customerService.remove(+id);
+  }
+
+  @Roles("customer")
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtSelfGuard)
+  @UseGuards(JwtActiveGuard)
+  @UseGuards(JwtAuthGuard)
+  @Patch(":id/password")
+  updatePassword(@Param("id") id: string, @Body() updatePasswordDto: UpdatePasswordDto) {
+    return this.customerService.updatePassword(+id, updatePasswordDto);
   }
 }

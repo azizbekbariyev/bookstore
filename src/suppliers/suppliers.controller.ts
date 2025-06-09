@@ -2,13 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { SuppliersService } from './suppliers.service';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { CreateSuppliersDto } from './dto/create-supplier.dto';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { JwtActiveGuard } from '../common/guards/jwt-active.guard';
 import { RolesGuard } from '../common/guards/jwt-role.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';
 
 @ApiTags('Suppliers')
+@ApiBearerAuth()
 @Controller('suppliers')
 export class SuppliersController {
   constructor(private readonly suppliersService: SuppliersService) {}

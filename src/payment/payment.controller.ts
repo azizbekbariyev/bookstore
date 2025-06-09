@@ -11,13 +11,14 @@ import {
 import { PaymentService } from "./payment.service";
 import { CreatePaymentDto } from "./dto/create-payment.dto";
 import { UpdatePaymentDto } from "./dto/update-payment.dto";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Roles } from "../common/decorators/roles-auth.decorator";
 import { RolesGuard } from "../common/guards/jwt-role.guard";
 import { JwtActiveGuard } from "../common/guards/jwt-active.guard";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 import { JwtSelfGuard } from "../common/guards/jwt-self.guard";
 
+@ApiBearerAuth()
 @ApiTags("Payment")
 @Controller("payment")
 export class PaymentController {

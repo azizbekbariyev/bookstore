@@ -2,13 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { WorkerService } from './worker.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/jwt-role.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';
 import { JwtSelfGuard } from '../common/guards/jwt-self.guard';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @ApiTags('Workers')
+@ApiBearerAuth()
 @Controller('worker')
 export class WorkerController {
   constructor(private readonly workerService: WorkerService) {}
@@ -53,5 +55,12 @@ export class WorkerController {
   @ApiOperation({ summary: 'ID bo‘yicha ishchini o‘chirish' })
   remove(@Param('id') id: string) {
     return this.workerService.remove(+id);
+  }
+
+  @UseGuards(JwtSelfGuard)
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/password')
+  updatePassword(@Param('id') id: string, @Body() updatePasswordDto: UpdatePasswordDto) {
+    return this.workerService.updatePassword(+id, updatePasswordDto);
   }
 }

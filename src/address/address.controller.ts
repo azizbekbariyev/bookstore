@@ -11,12 +11,11 @@ import {
 import { AddressService } from "./address.service";
 import { CreateAddressDto } from "./dto/create-address.dto";
 import { UpdateAddressDto } from "./dto/update-address.dto";
-import { ApiOperation } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 import { JwtActiveGuard } from "../common/guards/jwt-active.guard";
-import { RolesGuard } from "../common/guards/jwt-role.guard";
-import { Roles } from "../common/decorators/roles-auth.decorator";
 
+@ApiBearerAuth()
 @Controller("address")
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}

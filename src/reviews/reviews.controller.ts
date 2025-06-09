@@ -11,12 +11,13 @@ import {
 import { ReviewsService } from "./reviews.service";
 import { UpdateReviewDto } from "./dto/update-review.dto";
 import { CreateReviewDto } from "./dto/create-review.dto";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Roles } from "../common/decorators/roles-auth.decorator";
 import { RolesGuard } from "../common/guards/jwt-role.guard";
 import { JwtActiveGuard } from "../common/guards/jwt-active.guard";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 
+@ApiBearerAuth()
 @ApiTags("Reviews")
 @Controller("reviews")
 export class ReviewsController {

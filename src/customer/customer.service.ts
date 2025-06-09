@@ -6,6 +6,7 @@ import { Customer } from './entities/customer.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Address } from '../address/entities/address.entity';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class CustomerService {
@@ -17,11 +18,11 @@ export class CustomerService {
   ) {}
 
   async create(createCustomerDto: CreateCustomerDto) {
-    createCustomerDto.hashed_password = bcrypt.hashSync(createCustomerDto.hashed_password, 10);
     const address =  await this.addressRepository.findOne({
       where: { id: createCustomerDto.addressId }
     })
     if(address) {
+      createCustomerDto.hashed_password = bcrypt.hashSync(createCustomerDto.hashed_password, 10);
       return this.customerRepository.save(createCustomerDto);
     }
     throw new Error("Address not found");
@@ -42,7 +43,6 @@ export class CustomerService {
       where: { id: updateCustomerDto.addressId }
     })
     if(address) {
-      updateCustomerDto.hashed_password = bcrypt.hashSync(updateCustomerDto.hashed_password ?? "", 10);
       return this.customerRepository.update(id, updateCustomerDto);
     }
     throw new Error("Address not found");
@@ -62,5 +62,10 @@ export class CustomerService {
     return this.customerRepository.findOne({
       where: { email }
     });
+  }
+
+  updatePassword(id: number, updatePasswordDto: UpdatePasswordDto) {
+    const hashed_password = bcrypt.hashSync(updatePasswordDto.hashed_password, 10);
+    return this.customerRepository.update(id, { hashed_password });
   }
 }
