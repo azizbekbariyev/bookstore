@@ -11,11 +11,11 @@ export class BookAuthor {
 
   @ApiProperty({ type: () => Book, description: 'The book entity associated with this relation' })
   @ManyToOne(() => Book, (book) => book.bookAuthors, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'book_id' })
+  @JoinColumn({ name: 'bookId' })
   book: Book;
 
   @ApiProperty({ type: () => Author, description: 'The author entity associated with this relation' })
   @ManyToOne(() => Author, (author) => author.bookAuthors, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'author_id' })
+  @JoinColumn({ name: 'authorId' })
   author: Author;
 }

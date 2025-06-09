@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { Book } from "../../books/entities/book.entity";
 import { Customer } from "../../customer/entities/customer.entity";
@@ -22,14 +23,14 @@ export class Review {
     description: "ID of the book associated with the review",
   })
   @Column()
-  book_id: number;
+  bookId: number;
 
   @ApiProperty({
     example: 1,
     description: "ID of the customer who wrote the review",
   })
   @Column()
-  customer_id: number;
+  customerId: number;
 
   @ApiProperty({
     example: 4,
@@ -59,9 +60,11 @@ export class Review {
   @Column({ default: false })
   verified_purchase: boolean;
 
-  @ManyToOne(() => Book, (book) => book.reviews)
+  @ManyToOne(() => Book, (book) => book.reviews, {onDelete:"CASCADE"})
+  @JoinColumn({ name: "bookId" })
   book: Book;
 
-  @ManyToOne(() => Customer, (customer) => customer.reviews)
+  @ManyToOne(() => Customer, (customer) => customer.reviews, {onDelete:"CASCADE"})
+  @JoinColumn({ name: "customerId" })
   customer: Customer;
 }

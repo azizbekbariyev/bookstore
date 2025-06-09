@@ -24,41 +24,6 @@ export class Order {
   id: number;
 
   @ApiProperty({
-    example: 1,
-    description: "ID of the supplier",
-  })
-  @Column()
-  suppliers_id: number;
-
-  @ApiProperty({
-    example: 1,
-    description: "ID of the book store",
-  })
-  @Column()
-  book_store_id: number;
-
-  @ApiProperty({
-    example: 1,
-    description: "ID of the book",
-  })
-  @Column()
-  book_id: number;
-
-  @ApiProperty({
-    example: 1,
-    description: "ID of the customer",
-  })
-  @Column()
-  customer_id: number;
-
-  @ApiProperty({
-    example: 1,
-    description: "ID of the delivery",
-  })
-  @Column()
-  delivery_id: number;
-
-  @ApiProperty({
     example: "TRACK123456",
     description: "Tracking number of the order",
   })
@@ -75,19 +40,19 @@ export class Order {
   @OneToMany(() => Payment, (payment) => payment.order)
   payments: Payment[];
 
-  @ManyToOne(() => BookStore, (bookStore) => bookStore.orders)
-  @JoinColumn()
+  @ManyToOne(() => BookStore, (bookStore) => bookStore.orders, {onDelete:"CASCADE"})
+  @JoinColumn({ name: "bookStoreId" })
   bookStore: BookStore;
 
-  @ManyToOne(() => Book, (book) => book.orders)
-  @JoinColumn()
+  @ManyToOne(() => Book, (book) => book.orders, {onDelete:"CASCADE"})
+  @JoinColumn({ name: "bookId" })
   book: Book;
 
-  @ManyToOne(() => Customer, (customer) => customer.orders)
-  @JoinColumn()
+  @ManyToOne(() => Customer, (customer) => customer.orders, {onDelete:"CASCADE"})
+  @JoinColumn({ name: "customerId" })
   customer: Customer;
 
-  @ManyToOne(() => Delivery, (delivery) => delivery.orders)
-  @JoinColumn()
+  @ManyToOne(() => Delivery, (delivery) => delivery.orders, {onDelete:"CASCADE"})
+  @JoinColumn({ name: "deliveryId" })
   delivery: Delivery;
 }

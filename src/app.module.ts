@@ -35,7 +35,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.PG_USER,
       password: process.env.PG_PASSWORD,
       database: process.env.PG_DB,
-      entities: [Address, BookStore, Order, Payment, Delivery, Suppliers],
+      entities: [],
       synchronize: true,
       autoLoadEntities: true,
     }),

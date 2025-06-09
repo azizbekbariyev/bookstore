@@ -32,7 +32,7 @@ export class CreatePaymentDto {
     })
     @IsInt()
     @IsNotEmpty()
-    order_id: number;
+    orderId: number;
 
     @ApiProperty({
         example: true,

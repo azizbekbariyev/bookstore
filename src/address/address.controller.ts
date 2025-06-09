@@ -21,8 +21,8 @@ import { Roles } from "../common/decorators/roles-auth.decorator";
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
-  @UseGuards(JwtActiveGuard)
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtActiveGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
   @ApiOperation({ summary: "Yangi manzil yaratish" })
   create(@Body() createAddressDto: CreateAddressDto) {

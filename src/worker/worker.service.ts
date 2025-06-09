@@ -5,18 +5,27 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Worker } from './entities/worker.entity';
 import * as bcrypt from 'bcrypt';
+import { BookStore } from '../book_store/entities/book_store.entity';
 
 @Injectable()
 export class WorkerService {
   constructor(
     @InjectRepository(Worker)
     private readonly workerRepository: Repository<Worker>,
+    @InjectRepository(BookStore)
+    private readonly bookStoreRepository: Repository<BookStore>,
   ) {}
 
-  create(createWorkerDto: CreateWorkerDto) {
+  async create(createWorkerDto: CreateWorkerDto) {
     const { hashed_password} = createWorkerDto
-    createWorkerDto.hashed_password = bcrypt.hashSync(hashed_password, 10);
-    return this.workerRepository.save(createWorkerDto);
+    const bookStore = await this.bookStoreRepository.findOne({
+      where: { id: createWorkerDto.bookStoreId },
+    })
+    if (bookStore) {
+      createWorkerDto.hashed_password = bcrypt.hashSync(hashed_password, 10);
+      return this.workerRepository.save(createWorkerDto);
+    }
+    throw new Error("BookStore not found");
   }
 
   findAll() {
@@ -29,8 +38,14 @@ export class WorkerService {
     });
   }
 
-  update(id: number, updateWorkerDto: UpdateWorkerDto) {
-    return this.workerRepository.update(id, updateWorkerDto);
+  async update(id: number, updateWorkerDto: UpdateWorkerDto) {
+    const bookStore = await this.bookStoreRepository.findOne({
+      where: { id: updateWorkerDto.bookStoreId },
+    })
+    if (bookStore) {
+      return this.workerRepository.update(id, updateWorkerDto);
+    }
+    throw new Error("BookStore not found");
   }
 
   remove(id: number) {

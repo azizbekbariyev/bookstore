@@ -49,7 +49,8 @@ export class BookStore {
   @Column()
   name: string;
 
-  @ManyToOne(() => Address, (address) => address.bookStores)
+  @ManyToOne(() => Address, (address) => address.bookStores, {onDelete:"CASCADE"})
+  @JoinColumn({ name: 'addressId' })
   address: Address;
 
   @OneToMany(() => Book, (books) => books.bookStore)

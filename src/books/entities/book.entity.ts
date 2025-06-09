@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { BookStore } from "../../book_store/entities/book_store.entity";
@@ -87,10 +88,12 @@ export class Book {
   @Column()
   bookStoreId: number;  
 
-  @ManyToOne(() => Genre, (genre) => genre.books)
+  @ManyToOne(() => Genre, (genre) => genre.books, {onDelete:"CASCADE"})
+  @JoinColumn({ name: 'genreId' })
   genre: Genre;
 
-  @ManyToOne(() => BookStore, (bookStore) => bookStore.books)
+  @ManyToOne(() => BookStore, (bookStore) => bookStore.books, {onDelete:"CASCADE"})
+  @JoinColumn({ name: 'bookStoreId' })
   bookStore: BookStore;
 
   @OneToMany(() => BookAuthor, (bookAuthor) => bookAuthor.book)

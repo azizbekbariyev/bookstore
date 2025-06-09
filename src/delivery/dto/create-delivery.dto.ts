@@ -8,7 +8,7 @@ export class CreateDeliveryDto {
     })
     @IsInt()
     @IsNotEmpty()
-    suppliers_id: number;
+    suppliersId: number;
 
     @ApiProperty({
         example: "123 Delivery St",

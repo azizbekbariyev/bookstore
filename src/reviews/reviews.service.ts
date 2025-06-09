@@ -4,16 +4,31 @@ import { UpdateReviewDto } from './dto/update-review.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Review } from './entities/review.entity';
 import { Repository } from 'typeorm';
+import { Book } from '../books/entities/book.entity';
+import { Customer } from '../customer/entities/customer.entity';
 
 @Injectable()
 export class ReviewsService {
   constructor(
     @InjectRepository(Review)
     private readonly reviewRepository: Repository<Review>,
+    @InjectRepository(Customer)
+    private readonly bookRepository: Repository<Customer>,
+    @InjectRepository(Book)
+    private readonly customerRepository: Repository<Book>,
   ) {}
 
-  create(createReviewDto: CreateReviewDto) {
-    return this.reviewRepository.save(createReviewDto);
+  async create(createReviewDto: CreateReviewDto) {
+    const book = await this.bookRepository.findOne({
+      where: { id: createReviewDto.bookId },
+    })
+    const customer = await this.customerRepository.findOne({
+      where: { id: createReviewDto.customerId },
+    })
+    if(book && customer) {
+      return this.reviewRepository.save(createReviewDto);
+    }
+    throw new Error("BookStore not found");
   }
 
   findAll() {
@@ -29,8 +44,16 @@ export class ReviewsService {
     });
   }
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return this.reviewRepository.update(id, updateReviewDto);
+  async update(id: number, updateReviewDto: UpdateReviewDto) {
+    const book = await this.bookRepository.findOne({
+      where: { id: updateReviewDto.bookId },
+    })
+    const customer = await this.customerRepository.findOne({
+      where: { id: updateReviewDto.customerId },
+    })
+    if(book && customer) {
+      return this.reviewRepository.update(id, updateReviewDto);
+    }
   }
 
   remove(id: number) {

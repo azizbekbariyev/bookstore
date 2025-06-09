@@ -5,6 +5,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { Suppliers } from "../../suppliers/entities/supplier.entity";
 import { Order } from "../../order/entities/order.entity";
@@ -17,13 +18,6 @@ export class Delivery {
   })
   @PrimaryGeneratedColumn()
   id: number;
-
-  @ApiProperty({
-    example: 1,
-    description: "ID of the supplier",
-  })
-  @Column()
-  suppliers_id: number;
 
   @ApiProperty({
     example: "123 Delivery St",
@@ -53,7 +47,8 @@ export class Delivery {
   @Column({ type: "enum", enum: ["pending", "in_transit", "completed"] })
   status: string;
 
-  @ManyToOne(() => Suppliers, (suppliers) => suppliers.delivery)
+  @ManyToOne(() => Suppliers, (suppliers) => suppliers.delivery, {onDelete:"CASCADE"})
+  @JoinColumn({ name: "suppliersId" })
   suppliers: Suppliers;
 
   @OneToMany(() => Order, (order) => order.delivery)

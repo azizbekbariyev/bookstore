@@ -7,14 +7,14 @@ export class CreateReviewDto {
         description: "ID of the book associated with the review",
     })
     @IsInt()
-    book_id: number;
+    bookId: number;
 
     @ApiProperty({
         example: 1,
         description: "ID of the customer who wrote the review",
     })
     @IsInt()
-    customer_id: number;
+    customerId: number;
 
     @ApiProperty({
         example: 4,

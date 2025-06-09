@@ -8,7 +8,7 @@ export class CreateOrderDto {
     })
     @IsInt()
     @IsNotEmpty()
-    suppliers_id: number;
+    suppliersId: number;
 
     @ApiProperty({
         example: 1,
@@ -16,7 +16,7 @@ export class CreateOrderDto {
     })
     @IsInt()
     @IsNotEmpty()
-    book_store_id: number;
+    bookStoreId: number;
 
     @ApiProperty({
         example: 1,
@@ -24,7 +24,7 @@ export class CreateOrderDto {
     })
     @IsInt()
     @IsNotEmpty()
-    book_id: number;
+    bookId: number;
 
     @ApiProperty({
         example: 1,
@@ -32,7 +32,7 @@ export class CreateOrderDto {
     })
     @IsInt()
     @IsNotEmpty()
-    customer_id: number;
+    customerId: number;
 
     @ApiProperty({
         example: 1,
@@ -40,7 +40,7 @@ export class CreateOrderDto {
     })
     @IsInt()
     @IsNotEmpty()
-    delivery_id: number;
+    deliveryId: number;
 
     @ApiProperty({
         example: "TRACK123456",

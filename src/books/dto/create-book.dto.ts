@@ -52,7 +52,7 @@ export class CreateBookDto {
   })
   @IsOptional()
   @IsString()
-  genre_id?: string;
+  genreId: number;
 
   @ApiProperty({
     example: 180,

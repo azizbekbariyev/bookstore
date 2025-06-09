@@ -4,7 +4,6 @@ import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
-import { JwtActiveGuard } from '../common/guards/jwt-active.guard';
 import { RolesGuard } from '../common/guards/jwt-role.guard';
 import { Roles } from '../common/decorators/roles-auth.decorator';
 import { JwtSelfGuard } from '../common/guards/jwt-self.guard';
@@ -14,9 +13,9 @@ import { JwtSelfGuard } from '../common/guards/jwt-self.guard';
 export class WorkerController {
   constructor(private readonly workerService: WorkerService) {}
 
-  @Roles('superadmin')
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtAuthGuard)
+  // @Roles('superadmin') 
+  // @UseGuards(RolesGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
   @ApiOperation({ summary: 'Yangi ishchini qo‘shish' })
   create(@Body() createWorkerDto: CreateWorkerDto) {

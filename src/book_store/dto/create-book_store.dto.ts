@@ -29,7 +29,7 @@ export class CreateBookStoreDto {
     })
     @IsOptional()
     @IsInt()
-    worker_id?: number;
+    workerId?: number;
 
     @ApiProperty({
         example: 1,

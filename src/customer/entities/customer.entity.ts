@@ -5,10 +5,13 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  JoinColumn,
+  Or,
 } from "typeorm";
 import { Address } from "../../address/entities/address.entity";
 import { Review } from "../../reviews/entities/review.entity";
 import * as uuid from "uuid";
+import { Order } from "../../order/entities/order.entity";
 
 @Entity()
 export class Customer {
@@ -89,12 +92,14 @@ export class Customer {
   @Column({ nullable: true })
   hashed_refresh_token?: string;
 
-  @ManyToOne(() => Address, (address) => address.customers)
+  @ManyToOne(() => Address, (address) => address.customers, {onDelete:"CASCADE"})
+  @JoinColumn({ name: 'addressId' })
   address: Address;
 
-  @ManyToOne(() => Customer, (customer) => customer.orders)
-  orders: Customer;
+  @OneToMany(() => Order, (order) => order.customer)
+  @JoinColumn({ name: 'orderId' })
+  orders: Order[];
 
   @OneToMany(() => Review, (review) => review.customer)
-  reviews: Review;
+  reviews: Review[];
 }

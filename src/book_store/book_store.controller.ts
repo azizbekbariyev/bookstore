@@ -12,10 +12,10 @@ import { RolesGuard } from '../common/guards/jwt-role.guard';
 export class BookStoreController {
   constructor(private readonly bookStoreService: BookStoreService) {}
 
-  @Roles("superadmin")
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtActiveGuard)
-  @UseGuards(JwtAuthGuard)
+  // @Roles("superadmin")
+  // @UseGuards(RolesGuard)
+  // @UseGuards(JwtActiveGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
   @ApiOperation({ summary: 'Yangi kitob do‘koni ma\'lumotini yaratish' })
   create(@Body() createBookStoreDto: CreateBookStoreDto) {

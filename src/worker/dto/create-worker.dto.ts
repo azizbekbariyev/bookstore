@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsEmail, IsEnum, IsNotEmpty, IsDateString } from "class-validator";
+import { IsString, IsEmail, IsEnum, IsNotEmpty, IsDateString, IsInt } from "class-validator";
 
 export class CreateWorkerDto {
     @ApiProperty({
@@ -63,4 +63,12 @@ export class CreateWorkerDto {
         description:"Refresh token of the worker"
     })
     hashed_refresh_token?: string
+
+    @ApiProperty({
+        example: 1,
+        description: "ID of the book store associated with the worker",
+    })
+    @IsInt()
+    @IsNotEmpty()
+    bookStoreId: number
 }
