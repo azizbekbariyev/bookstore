@@ -192,7 +192,7 @@ export class AuthService {
       email: customer.email,
       hashed_password: customer.hashed_password,
       is_active: customer.is_active,
-      role:["customer"]
+      role: ["customer"],
     };
 
     const [accessToken, refreshToken] = await Promise.all([
